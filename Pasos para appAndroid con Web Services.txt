@@ -2,10 +2,10 @@ Para realizar este proceso, primero debe estar el archivo sesion.php que retorne
 
 1. Crear los archivos php que retornan datos en formato JSON
 2. Crear app para Login con ActivityMain
-2.1. Cambiar el id del layout por ejemplo: escenario
+2.1. Cambiar el nombre del layout por ejemplo: escenario
 2.2. Crear layout fragment (Blank), por ejemplo SesionFragment
 2.2.1. Crear el diseño para login (usuario y contraseña)
-2.2.2. Dejar solo el codigo de java que permita hacer solo lo siguiente:(SesionFragment.java)
+2.2.2. Dejar solo el codigo de java que permita hacer solo lo siguiente:
 	 @Override
     	public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) 
@@ -168,62 +168,4 @@ public class usuario {
     }
 }
 7.1. Ejecutar desde el emulador ... y verificar que se conecta y recupera el nombre del usuario
-8. Crear actividad para el registro ....
-8.1. El siguiente codigo debe ir en Registro.java, por ejemplo:
-
-	public class Registro extends AppCompatActivity {
-
-    EditText usr,nombre,correo,pass;
-    Button registro;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registro);
-
-        usr=findViewById(R.id.etusr);
-        nombre=findViewById(R.id.etnom);
-        correo=findViewById(R.id.etcorreo);
-        pass=findViewById(R.id.etclave);
-        registro=findViewById(R.id.btnregis);
-
-        registro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Registraruser("http://172.16.16.3:8081/servicioswebandroidphp/registro.php");
-                }
-        });
-    }
-
-    private void Registraruser(String URL){
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response)
-            {
-                Toast.makeText(getApplicationContext(), "Registro Exitoso", Toast.LENGTH_SHORT).show();
-            }
-        }, new Response.ErrorListener()
-        {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_SHORT).show();
-            }
-        })
-        {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> parametros=new HashMap<String, String>();
-                parametros.put("usr",usr.getText().toString());
-                parametros.put("clave",pass.getText().toString());
-                parametros.put("nombre",nombre.getText().toString());
-                parametros.put("correo",correo.getText().toString());
-                return parametros;
-            }
-        };
-        RequestQueue requestQueue= Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-}
-
 
